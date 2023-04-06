@@ -1,0 +1,27 @@
+name: Fetch latest memcached-exporter release
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *" # every hour
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Fetch latest memcached-exporter release
+      id: fetch-release
+      run: |
+        LATEST_RELEASE=$(curl -L \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/prometheus/memcached_exporter/releases | jq '.[0].tag_name' --raw-output)
+        
+        yq '(.package.version) = env(LATEST_RELEASE)' memcached-exporter.melange.yaml
+    - name: Commit results
+      uses: EndBug/add-and-commit@v9
+      with:
+        committer_name: GitHub Actions
+        committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+        fetch: false
+        message: Update memcached-exporter version
+        add: "* --force"
