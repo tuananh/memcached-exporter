@@ -1,1 +1,1 @@
-[![Build action](https://github.com/tuananh/apko-image-template/actions/workflows/release.yaml/badge.svg)](https://github.com/tuananh/apko-image-template/actions/workflows/release.yaml)
+[![Build action](https://github.com/tuananh/memcached-exporter/actions/workflows/release.yaml/badge.svg)](https://github.com/tuananh/memcached-exporter/actions/workflows/release.yaml)

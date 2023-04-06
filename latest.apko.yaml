@@ -3,11 +3,11 @@ contents:
     - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
   repositories:
     - https://packages.wolfi.dev/os
-    - '@local /github/workspace/packages'
+    - '@local ./packages'
   packages:
     - wolfi-baselayout
     - busybox
-    - hello@local
+    - memcached-exporter@local
 
 accounts:
   groups:
@@ -20,7 +20,7 @@ accounts:
   run-as: 65532
 
 entrypoint:
-  command: /usr/local/bin/hello
+  command: /usr/bin/memcached-exporter
 
 archs:
 - amd64
