@@ -75,12 +75,10 @@ runs:
       run: |
         TMP_CLONE_DIR="$(mktemp -d)"
         git clone https://github.com/chainguard-dev/melange "${TMP_CLONE_DIR}"
-        
+        pushd "${TMP_CLONE_DIR}"
         if [[ -n "${{ inputs.commithash }}" ]]; then
           git checkout ${{ inputs.commithash }}
         fi
-
-        pushd "${TMP_CLONE_DIR}"
         make melange
         sudo env "PATH=$PATH" make install
         melange version
