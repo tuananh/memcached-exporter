@@ -77,7 +77,7 @@ runs:
         git clone https://github.com/chainguard-dev/melange "${TMP_CLONE_DIR}"
         
         if [[ -n "${{ inputs.commithash }}" ]]; then
-          git checkoout ${{ inputs.commithash }}
+          git checkout ${{ inputs.commithash }}
         fi
 
         pushd "${TMP_CLONE_DIR}"
