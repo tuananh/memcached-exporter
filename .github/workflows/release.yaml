@@ -39,10 +39,7 @@ jobs:
         run: sudo apt-get install -y qemu-user
 
       - uses: sigstore/cosign-installer@main
-      # - uses: chainguard-dev/actions/setup-melange@main
-      - uses: tuananh/memcached-exporter/.github/actions/setup-melange@main
-        with:
-          commithash: 34643adbdff2c5bb2bc818842f23d600125b683a
+      - uses: chainguard-dev/actions/setup-melange@main
       - uses: chainguard-dev/actions/melange-keygen@main
       
       - name: Build memcached-exporter package
