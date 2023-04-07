@@ -42,7 +42,7 @@ jobs:
       # - uses: chainguard-dev/actions/setup-melange@main
       - uses: tuananh/memcached-exporter/.github/actions/setup-melange@main
         with:
-          version: v0.2.0
+          commithash: 34643adbdff2c5bb2bc818842f23d600125b683a
       - uses: chainguard-dev/actions/melange-keygen@main
       
       - name: Build memcached-exporter package

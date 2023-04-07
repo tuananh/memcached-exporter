@@ -7,11 +7,11 @@ description: |
 
 # workaround until melange fix the error upstream
 inputs:
-  version:
+  commithash:
     description: |
-      The package version to build.
+      The commit hash to build
     required: false
-    default: v0.3.2
+    default: ""
 
 runs:
   using: 'composite'
@@ -74,7 +74,12 @@ runs:
       shell: bash
       run: |
         TMP_CLONE_DIR="$(mktemp -d)"
-        git clone --depth 1 --branch ${{inputs.version}} https://github.com/chainguard-dev/melange "${TMP_CLONE_DIR}"
+        git clone https://github.com/chainguard-dev/melange "${TMP_CLONE_DIR}"
+        
+        if [[ -n "${{ inputs.commithash }}" ]]; then
+          git checkoout ${{ inputs.commithash }}
+        fi
+
         pushd "${TMP_CLONE_DIR}"
         make melange
         sudo env "PATH=$PATH" make install
