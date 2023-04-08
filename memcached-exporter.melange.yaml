@@ -37,7 +37,7 @@ pipeline:
       cd memcached_exporter
 
       GO_LDFLAGS="-X github.com/prometheus/common/version.Version=${{package.version}}
-        -X github.com/prometheus/common/version.Revision=$(git rev-parse --short HEAD)
+        -X github.com/prometheus/common/version.Revision=$(git rev-parse HEAD)
         -X github.com/prometheus/common/version.Branch=HEAD
         -X github.com/prometheus/common/version.BuildUser=$USER@$HOSTNAME
         -X github.com/prometheus/common/version.BuildDate=$(date -u "+%Y%m%d-%H:%M:%S" ${SOURCE_DATE_EPOCH:+-d @$SOURCE_DATE_EPOCH})"
