@@ -78,6 +78,7 @@ jobs:
           sarif_file: 'trivy-results.sarif'
   
   gen-trivy-badge:
+    needs: [build]
     name: Update README with Trivy badges
     runs-on: ubuntu-latest
     steps:
