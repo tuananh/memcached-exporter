@@ -32,6 +32,6 @@ pipeline:
       # Mitigate GHSA-hw7c-3rfg-p46j
       go get google.golang.org/protobuf@v1.29.1
   - runs: |
-      mkdir -p ${{targets.destdir}}/usr/bin
-      go build -o ${{targets.destdir}}/usr/bin/memcached-exporter ./cmd/memcached_exporter
+      mkdir -p ${{targets.destdir}}/bin
+      go build -o ${{targets.destdir}}/bin/memcached_exporter ./cmd/memcached_exporter
   - uses: strip
