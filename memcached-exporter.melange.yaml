@@ -18,20 +18,33 @@ environment:
       - go
       
 pipeline:
-  # - uses: go/install
-  #   with:
-  #     package: github.com/prometheus/memcached_exporter/cmd/memcached_exporter@v${{package.version}}
-  
-  # fetch instead of go/install so that we can manually patch
-  - uses: fetch
+  # git-checkout instead of go/install so that we can manually patch as well as passing git revision
+  # to go build command
+  - uses: git-checkout
     with:
-      uri: https://github.com/prometheus/memcached_exporter/archive/refs/tags/v${{package.version}}.tar.gz
-      expected-sha256: 360ac87b86e7ae704ea4db493bac1e1157a3c4f5cf57f24b9d66be24fb795e9f
+      repository: https://github.com/prometheus/memcached_exporter
+      tag: v${{package.version}}
+      expected-commit: 48795923bbe6c23eb044c522283e0d865bffbc77
+      destination: memcached_exporter
+
   # TODO: remove this when it's fixed upstream
   - runs: |
+      cd memcached_exporter
       # Mitigate GHSA-hw7c-3rfg-p46j
       go get google.golang.org/protobuf@v1.29.1
   - runs: |
       mkdir -p ${{targets.destdir}}/bin
-      go build -o ${{targets.destdir}}/bin/memcached_exporter ./cmd/memcached_exporter
+      cd memcached_exporter
+
+      GO_LDFLAGS="-X github.com/prometheus/common/version.Version=${{package.version}}
+        -X github.com/prometheus/common/version.Revision=$(git rev-parse --short HEAD)
+        -X github.com/prometheus/common/version.Branch=HEAD
+        -X github.com/prometheus/common/version.BuildUser=$USER@$HOSTNAME
+        -X github.com/prometheus/common/version.BuildDate=$(date -u "+%Y%m%d-%H:%M:%S" ${SOURCE_DATE_EPOCH:+-d @$SOURCE_DATE_EPOCH})"
+        
+      go build \
+        -tags netgo \
+        -ldflags "$GO_LDFLAGS" \
+        -o ${{targets.destdir}}/bin/memcached_exporter \
+        ./cmd/memcached_exporter
   - uses: strip
