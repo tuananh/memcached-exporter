@@ -2,14 +2,13 @@ name: Fetch latest memcached-exporter release
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 * * * *" # every hour
+    - cron: "0 */4 * * *" # every 4 hours
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Fetch latest memcached-exporter release
-      id: fetch-release
+    - name: Check new release
       run: |
         export LATEST_RELEASE=$(curl -L \
           -H "Accept: application/vnd.github+json" \
