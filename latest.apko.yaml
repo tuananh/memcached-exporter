@@ -19,7 +19,7 @@ accounts:
   run-as: 65532
 
 entrypoint:
-  command: /bin/memcached_exporter
+  command: /usr/bin/memcached_exporter
 
 archs:
 - amd64
