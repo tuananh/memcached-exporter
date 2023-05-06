@@ -1,5 +1,7 @@
 [![Build action](https://github.com/tuananh/memcached-exporter/actions/workflows/release.yaml/badge.svg)](https://github.com/tuananh/memcached-exporter/actions/workflows/release.yaml)
 
+## Upstreamed to Chainguard Images: Use that instead https://github.com/chainguard-images/images/tree/main/images/memcached-exporter
+
 # memcached-exporter
 
 <!-- TRIVY_BADGE_START -->
